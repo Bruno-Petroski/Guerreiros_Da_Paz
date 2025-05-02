@@ -1,0 +1,13 @@
+<h1>Professores</h1>
+
+<%= link_to 'Novo Professor', new_professor_path %>
+
+<ul>
+  <% @professores.each do |p| %>
+    <li>
+      <%= p.nome %> - <%= p.especialidade %>
+      | <%= link_to 'Editar', edit_professor_path(p) %>
+      | <%= link_to 'Excluir', professor_path(p), method: :delete, data: { confirm: 'Tem certeza?' } %>
+    </li>
+  <% end %>
+</ul>

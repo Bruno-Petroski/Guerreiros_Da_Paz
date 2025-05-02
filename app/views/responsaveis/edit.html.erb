@@ -1,0 +1,14 @@
+<h1><%= @responsavel.new_record? ? "Novo" : "Editar" %> Responsável</h1>
+
+<%= form_with model: @responsavel do |f| %>
+  <%= f.label :nome %><br>
+  <%= f.text_field :nome %><br>
+
+  <%= f.label :telefone %><br>
+  <%= f.telephone_field :telefone %><br>
+
+  <%= f.label :endereco %><br>
+  <%= f.text_field :endereco %><br>
+
+  <%= f.submit %>
+<% end %>

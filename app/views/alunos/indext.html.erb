@@ -1,0 +1,13 @@
+<h1>Alunos</h1>
+
+<%= link_to 'Novo Aluno', new_aluno_path %>
+
+<ul>
+  <% @alunos.each do |a| %>
+    <li>
+      <%= a.nome %> - <%= a.responsavel.nome if a.responsavel %>
+      | <%= link_to 'Editar', edit_aluno_path(a) %>
+      | <%= link_to 'Excluir', aluno_path(a), method: :delete, data: { confirm: 'Tem certeza?' } %>
+    </li>
+  <% end %>
+</ul>

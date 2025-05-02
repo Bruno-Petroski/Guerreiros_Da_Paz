@@ -1,0 +1,13 @@
+<h1>Responsáveis</h1>
+
+<%= link_to 'Novo Responsável', new_responsavel_path %>
+
+<ul>
+  <% @responsaveis.each do |r| %>
+    <li>
+      <%= r.nome %> - <%= r.telefone %>
+      | <%= link_to 'Editar', edit_responsavel_path(r) %>
+      | <%= link_to 'Excluir', responsavel_path(r), method: :delete, data: { confirm: 'Tem certeza?' } %>
+    </li>
+  <% end %>
+</ul>

@@ -1,0 +1,14 @@
+<h1>Turmas</h1>
+
+<%= link_to 'Nova Turma', new_turma_path %>
+
+<ul>
+  <% @turmas.each do |t| %>
+    <li>
+      <%= t.nome %> - <%= t.modalidade %> - Professor: <%= t.professor.nome %>
+      | <%= link_to 'Ver', turma_path(t) %>
+      | <%= link_to 'Editar', edit_turma_path(t) %>
+      | <%= link_to 'Excluir', turma_path(t), method: :delete, data: { confirm: 'Tem certeza?' } %>
+    </li>
+  <% end %>
+</ul>

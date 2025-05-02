@@ -1,0 +1,17 @@
+<h1><%= @professor.new_record? ? "Novo" : "Editar" %> Professor</h1>
+
+<%= form_with model: @professor do |f| %>
+  <%= f.label :nome %><br>
+  <%= f.text_field :nome %><br>
+
+  <%= f.label :email %><br>
+  <%= f.email_field :email %><br>
+
+  <%= f.label :telefone %><br>
+  <%= f.telephone_field :telefone %><br>
+
+  <%= f.label :especialidade %><br>
+  <%= f.text_field :especialidade %><br>
+
+  <%= f.submit %>
+<% end %>

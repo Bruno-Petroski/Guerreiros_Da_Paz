@@ -1,0 +1,10 @@
+<h1>Matricular Aluno na Turma: <%= @turma.nome %></h1>
+
+<%= form_with url: turma_matriculas_path(@turma), method: :post do |f| %>
+  <div>
+    <%= label_tag :aluno_id, "Aluno" %>
+    <%= select_tag 'matricula[aluno_id]', options_from_collection_for_select(@alunos, :id, :nome) %>
+  </div>
+
+  <%= f.submit "Matricular" %>
+<% end %>
