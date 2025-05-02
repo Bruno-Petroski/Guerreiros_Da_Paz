@@ -10,28 +10,71 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_30_232259) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_02_131116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "Aluno", id: :integer, default: nil, force: :cascade do |t|
-    t.string "nome", limit: 250, null: false
-    t.date "data_nascimento", null: false
-    t.decimal "cpf", precision: 11, null: false
-    t.date "data_cadastro", default: -> { "now()" }, null: false
-    t.string "tipo_sanguineo", limit: 3, null: false
-    t.boolean "isAlocado"
-    t.integer "id_responsavel", null: false
-
-    t.unique_constraint ["cpf"], name: "Aluno_cpf_key"
+  create_table "alunos", force: :cascade do |t|
+    t.string "nome"
+    t.date "data_nascimento"
+    t.string "email"
+    t.string "telefone"
+    t.bigint "responsaveis_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["responsaveis_id"], name: "index_alunos_on_responsaveis_id"
   end
 
-  create_table "Responsavel", id: :integer, default: nil, force: :cascade do |t|
-    t.string "nome", limit: 250, null: false
-    t.decimal "cpf", precision: 11, null: false
-    t.string "telefone", limit: 12, null: false
+  create_table "aulas", force: :cascade do |t|
+    t.bigint "turma_id", null: false
+    t.date "data"
+    t.time "horario_inicio"
+    t.time "horario_fim"
+    t.text "conteudo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["turma_id"], name: "index_aulas_on_turma_id"
+  end
 
-    t.unique_constraint ["cpf"], name: "Responsavel_cpf_key"
+  create_table "matriculas", force: :cascade do |t|
+    t.bigint "aluno_id", null: false
+    t.bigint "turma_id", null: false
+    t.date "data_matricula"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "em_espera"
+    t.index ["aluno_id"], name: "index_matriculas_on_aluno_id"
+    t.index ["turma_id"], name: "index_matriculas_on_turma_id"
+  end
+
+  create_table "professors", force: :cascade do |t|
+    t.string "nome"
+    t.string "email"
+    t.string "telefone"
+    t.string "especialidade"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "responsaveis", force: :cascade do |t|
+    t.string "nome"
+    t.string "telefone"
+    t.string "endereco"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "turmas", force: :cascade do |t|
+    t.string "nome"
+    t.text "descricao"
+    t.string "modalidade"
+    t.string "local"
+    t.string "horario"
+    t.integer "capacidade"
+    t.bigint "professor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["professor_id"], name: "index_turmas_on_professor_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -46,5 +89,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_232259) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "Aluno", "Responsavel", column: "id_responsavel", name: "id_responsavel"
+  add_foreign_key "alunos", "responsaveis", column: "responsaveis_id"
+  add_foreign_key "aulas", "turmas"
+  add_foreign_key "matriculas", "alunos"
+  add_foreign_key "matriculas", "turmas"
+  add_foreign_key "turmas", "professors"
 end
