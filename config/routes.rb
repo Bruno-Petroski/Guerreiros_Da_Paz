@@ -7,7 +7,8 @@ Rails.application.routes.draw do
     delete '/users/sign_out' => 'devise/sessions#destroy'
   end
 
-  resources :users, except: [:show]
+  get 'dashboard', to: 'dashboard#index'
+  root 'dashboard#index'
 
-  root to: 'users#index'
+  resources :users, except: [:show]
 end
