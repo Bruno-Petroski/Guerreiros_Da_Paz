@@ -20,9 +20,120 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <style>
+      .nav-bar {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .nav-bar .brand {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #333;
+        text-decoration: none;
+      }
+      .nav-bar .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .nav-bar .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding-right: 1rem;
+        border-right: 1px solid #dee2e6;
+      }
+      .manage-users-button {
+        background-color: #28a745;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+      }
+      .manage-users-button:hover {
+        background-color: #218838;
+      }
+      .logout-button {
+        background-color: #dc3545;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+      }
+      .logout-button:hover {
+        background-color: #c82333;
+      }
+      .flash-messages {
+        padding: 1rem;
+      }
+      .flash-messages .notice {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+      .flash-messages .alert {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        .nav-bar {
+          flex-direction: column;
+          gap: 1rem;
+          text-align: center;
+        }
+        .nav-bar .nav-actions {
+          flex-direction: column;
+          width: 100%;
+        }
+        .nav-bar .user-info {
+          flex-direction: column;
+          padding-right: 0;
+          border-right: none;
+          border-bottom: 1px solid #dee2e6;
+          padding-bottom: 1rem;
+          margin-bottom: 1rem;
+        }
+      }
+    </style>
   </head>
 
   <body>
+    <% if user_signed_in? %>
+      <div class="nav-bar">
+        <a href="/" class="brand">Guerreiros Da Paz</a>
+        <div class="nav-actions">
+          <div class="user-info">
+            <span><%= current_user.email %></span>
+          </div>
+          <%= link_to "Gerenciar Usuários", users_path, class: "manage-users-button" %>
+          <%= button_to "Sair", destroy_user_session_path, method: :delete, class: "logout-button" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="flash-messages">
+      <% if notice %>
+        <div class="notice"><%= notice %></div>
+      <% end %>
+      <% if alert %>
+        <div class="alert"><%= alert %></div>
+      <% end %>
+    </div>
+
     <%= yield %>
   </body>
 </html>
