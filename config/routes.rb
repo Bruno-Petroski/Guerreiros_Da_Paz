@@ -10,9 +10,12 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index'
   root 'dashboard#index'
 
+  resources :users, except: [:show]
+  
   resources :responsaveis
   resources :alunos
   resources :professores
   resources :turmas do
-  resources :matriculas, only: [:new, :create, :destroy]
+    resources :matriculas, only: [:new, :create, :destroy]
+  end
 end
