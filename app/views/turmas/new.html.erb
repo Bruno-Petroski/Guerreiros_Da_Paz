@@ -1,0 +1,37 @@
+<div class="header">
+  <button class="btn-voltar">Voltar</button>
+  <h2 class="titulo">Cadastro de Turmas</h2>
+  <div class="logo">Guerreiros da Paz</div>
+</div>
+
+<div class="card-cadastro">
+  <div class="cadastro-flex">
+    <div class="cadastro-col">
+      <h3>Turma</h3>
+      <%= form_with model: @turma do |f| %>
+        <%= f.label :modalidade, 'Modalidade da Luta:' %>
+        <%= f.text_field :modalidade, value: 'Jiu-Jitsu' %>
+
+        <%= f.label :local, 'Local:' %>
+        <%= f.text_field :local %>
+
+        <%= f.label :dia_semana, 'Dia da Semana:' %>
+        <%= f.text_field :dia_semana %>
+
+        <%= f.label :professor_id, 'Professor:' %>
+        <%= f.collection_select :professor_id, Professor.all, :id, :nome, prompt: 'Selecione' %>
+
+        <%= f.label :horario_inicio, 'Horário da aula:' %>
+        <%= f.time_select :horario_inicio, {prompt: {hour: 'Início', minute: ''}}, {class: 'time-select'} %>
+        <%= f.time_select :horario_fim, {prompt: {hour: 'Fim', minute: ''}}, {class: 'time-select'} %>
+
+        <div class="botoes-cadastro">
+          <%= f.submit 'Cadastrar Turma', class: 'btn-cadastrar' %>
+          <button class="btn-voltar-tela">Voltar a tela inicial</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Adicione as classes CSS correspondentes no seu arquivo de estilos para obter o visual desejado -->

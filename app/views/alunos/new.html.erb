@@ -1,20 +1,44 @@
-<h1><%= @aluno.new_record? ? "Novo" : "Editar" %> Aluno</h1>
+<div class="header">
+  <button class="btn-voltar">Voltar</button>
+  <h2 class="titulo">Cadastro de Alunos</h2>
+  <div class="logo">Guerreiros da Paz</div>
+</div>
 
-<%= form_with model: @aluno do |f| %>
-  <%= f.label :nome %><br>
-  <%= f.text_field :nome %><br>
+<div class="card-cadastro">
+  <div class="cadastro-flex">
+    <div class="cadastro-col">
+      <h3>Aluno</h3>
+      <%= form_with model: @aluno do |f| %>
+        <%= f.label :nome, 'Nome do Aluno:' %>
+        <%= f.text_field :nome %>
 
-  <%= f.label :data_nascimento %><br>
-  <%= f.date_select :data_nascimento %><br>
+        <%= f.label :cpf, 'CPF:' %>
+        <%= f.text_field :cpf %>
 
-  <%= f.label :email %><br>
-  <%= f.email_field :email %><br>
+        <%= f.label :data_nascimento, 'Data de Nascimento:' %>
+        <%= f.date_select :data_nascimento, {prompt: {day: 'Dia', month: 'Mês', year: 'Ano'}}, {class: 'date-select'} %>
 
-  <%= f.label :telefone %><br>
-  <%= f.telephone_field :telefone %><br>
+        <%= f.label :tipo_sanguineo, 'Tipo Sanguíneo:' %>
+        <%= f.select :tipo_sanguineo, [['A+', 'A+'], ['A-', 'A-'], ['B+', 'B+'], ['B-', 'B-'], ['AB+', 'AB+'], ['AB-', 'AB-'], ['O+', 'O+'], ['O-', 'O-']], prompt: 'Tipo' %>
 
-  <%= f.label :responsavel_id, "Responsável" %><br>
-  <%= f.collection_select :responsavel_id, Responsavel.all, :id, :nome, prompt: "Selecione" %><br>
+        <%= f.label :modalidade, 'Modalidade da Luta:' %>
+        <%= f.text_field :modalidade, value: 'Jiu-Jitsu' %>
+    </div>
+    <div class="cadastro-col">
+      <h3>Responsável</h3>
+      <%= f.label :responsavel_cpf, 'CPF do Responsável:' %>
+      <%= f.text_field :responsavel_cpf %>
 
-  <%= f.submit %>
-<% end %>
+      <%= f.label :responsavel_nome, 'Nome do Responsável:' %>
+      <%= f.text_field :responsavel_nome %>
+
+      <%= f.label :responsavel_telefone, 'Telefone do Responsável:' %>
+      <%= f.text_field :responsavel_telefone %>
+    </div>
+  </div>
+  <div class="botoes-cadastro">
+    <%= f.submit 'Cadastrar Aluno', class: 'btn-cadastrar' %>
+    <button class="btn-voltar-tela">Voltar a tela inicial</button>
+  </div>
+  <% end %>
+</div>
