@@ -1,4 +1,6 @@
 class Responsavel < ApplicationRecord
-    has_many :alunos, dependent: :destroy
-  end
+  self.table_name = 'responsaveis'
+  
+  has_many :alunos, dependent: :destroy
+end
   

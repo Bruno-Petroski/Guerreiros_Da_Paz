@@ -1,9 +1,18 @@
 class AlunosController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_aluno, only: [:edit, :update, :destroy]
+  before_action :set_aluno, only: [:show, :edit, :update, :destroy]
 
   def index
-    @alunos = Aluno.includes(:responsavel).all
+    if params[:search].present?
+      @alunos = Aluno.joins(:responsavel)
+                    .where('alunos.nome ILIKE :search OR responsaveis.nome ILIKE :search', 
+                           search: "%#{params[:search]}%")
+    else
+      @alunos = Aluno.all
+    end
+  end
+
+  def show
   end
 
   def new
@@ -19,11 +28,12 @@ class AlunosController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @aluno.update(aluno_params)
-      redirect_to alunos_path, notice: 'Atualizado com sucesso.'
+      redirect_to alunos_path, notice: 'Aluno atualizado com sucesso.'
     else
       render :edit
     end
@@ -31,7 +41,7 @@ class AlunosController < ApplicationController
 
   def destroy
     @aluno.destroy
-    redirect_to alunos_path, notice: 'Removido com sucesso.'
+    redirect_to alunos_path, notice: 'Aluno removido com sucesso.'
   end
 
   private
@@ -41,6 +51,6 @@ class AlunosController < ApplicationController
   end
 
   def aluno_params
-    params.require(:aluno).permit(:nome, :data_nascimento, :email, :telefone, :responsavel_id)
+    params.require(:aluno).permit(:nome, :data_nascimento, :responsavel_id)
   end
 end

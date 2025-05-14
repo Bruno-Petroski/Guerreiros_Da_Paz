@@ -1,15 +1,15 @@
 <div class="page-container">
   <div class="header">
-    <h1>Cadastro de Responsáveis</h1>
-    <%= link_to new_responsavei_path, class: 'new-button' do %>
-      <i class="fas fa-plus"></i> Novo Responsável
+    <h1>Cadastro de Alunos</h1>
+    <%= link_to new_aluno_path, class: 'new-button' do %>
+      <i class="fas fa-plus"></i> Novo Aluno
     <% end %>
   </div>
 
   <div class="search-bar">
-    <%= form_tag responsaveis_path, method: :get, class: "search-form" do %>
+    <%= form_tag alunos_path, method: :get, class: "search-form" do %>
       <div class="search-input-container">
-        <%= text_field_tag :search, params[:search], class: "search-input", placeholder: "Buscar por nome ou telefone..." %>
+        <%= text_field_tag :search, params[:search], class: "search-input", placeholder: "Buscar por nome do aluno ou responsável..." %>
         <%= button_tag type: 'submit', class: "search-button" do %>
           <i class="fas fa-search"></i>
         <% end %>
@@ -18,28 +18,25 @@
   </div>
 
   <div class="list-container">
-    <% if @responsaveis.any? %>
-      <% @responsaveis.each do |responsavel| %>
+    <% if @alunos.any? %>
+      <% @alunos.each do |aluno| %>
         <div class="list-item">
           <div class="item-info">
-            <span class="item-name"><%= responsavel.nome %></span>
+            <span class="item-name"><%= aluno.nome %></span>
             <span class="item-details">
-              <%= responsavel.telefone %>
-              <% if responsavel.endereco.present? %>
-                • <%= responsavel.endereco %>
-              <% end %>
+              <%= "#{aluno.data_nascimento&.strftime('%d/%m/%Y')} • #{aluno.responsavel&.nome}" %>
             </span>
           </div>
           <div class="item-actions">
-            <%= link_to responsavel_path(responsavel), class: 'action-icon view-icon', title: 'Visualizar' do %>
+            <%= link_to aluno_path(aluno), class: 'action-icon view-icon', title: 'Visualizar' do %>
               <i class="fas fa-eye"></i>
             <% end %>
-            <%= link_to edit_responsavel_path(responsavel), class: 'action-icon edit-icon', title: 'Editar' do %>
+            <%= link_to edit_aluno_path(aluno), class: 'action-icon edit-icon', title: 'Editar' do %>
               <i class="fas fa-edit"></i>
             <% end %>
-            <%= link_to responsavel_path(responsavel), 
+            <%= link_to aluno_path(aluno), 
                 method: :delete,
-                data: { turbo_confirm: 'Tem certeza que deseja excluir este responsável?' },
+                data: { turbo_confirm: 'Tem certeza que deseja excluir este aluno?' },
                 class: 'action-icon delete-icon',
                 title: 'Excluir' do %>
               <i class="fas fa-trash"></i>
@@ -48,7 +45,7 @@
         </div>
       <% end %>
     <% else %>
-      <p class="no-results">Nenhum responsável cadastrado.</p>
+      <p class="no-results">Nenhum aluno cadastrado.</p>
     <% end %>
   </div>
 </div>
@@ -227,4 +224,4 @@ h1 {
     justify-content: flex-end;
   }
 }
-</style>
+</style> 

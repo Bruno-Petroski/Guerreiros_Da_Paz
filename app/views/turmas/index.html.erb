@@ -1,14 +1,240 @@
-<h1>Turmas</h1>
+<div class="page-container">
+  <div class="header">
+    <h1>Cadastro de Turmas</h1>
+    <%= link_to new_turma_path, class: 'new-button' do %>
+      <i class="fas fa-plus"></i> Nova Turma
+    <% end %>
+  </div>
 
-<%= link_to 'Nova Turma', new_turma_path %>
+  <div class="search-bar">
+    <%= form_tag turmas_path, method: :get, class: "search-form" do %>
+      <div class="search-input-container">
+        <%= text_field_tag :search, params[:search], class: "search-input", placeholder: "Buscar por nome da turma ou professor..." %>
+        <%= button_tag type: 'submit', class: "search-button" do %>
+          <i class="fas fa-search"></i>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 
-<ul>
-  <% @turmas.each do |t| %>
-    <li>
-      <%= t.nome %> - <%= t.modalidade %> - Professor: <%= t.professor.nome %>
-      | <%= link_to 'Ver', turma_path(t) %>
-      | <%= link_to 'Editar', edit_turma_path(t) %>
-      | <%= link_to 'Excluir', turma_path(t), method: :delete, data: { confirm: 'Tem certeza?' } %>
-    </li>
-  <% end %>
-</ul>
+  <div class="list-container">
+    <% if @turmas.any? %>
+      <% @turmas.each do |turma| %>
+        <div class="list-item">
+          <div class="item-info">
+            <span class="item-name"><%= turma.nome %></span>
+            <span class="item-details">
+              <%= "#{turma.horario}" %>
+              <% if turma.professor.present? %>
+                • Professor: <%= turma.professor.nome %>
+              <% end %>
+              <% if turma.alunos.any? %>
+                • <%= pluralize(turma.alunos.count, 'aluno', 'alunos') %>
+              <% end %>
+            </span>
+          </div>
+          <div class="item-actions">
+            <%= link_to turma_path(turma), class: 'action-icon view-icon', title: 'Visualizar' do %>
+              <i class="fas fa-eye"></i>
+            <% end %>
+            <%= link_to edit_turma_path(turma), class: 'action-icon edit-icon', title: 'Editar' do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= link_to new_turma_matricula_path(turma), class: 'action-icon add-icon', title: 'Adicionar Aluno' do %>
+              <i class="fas fa-user-plus"></i>
+            <% end %>
+            <%= link_to turma_path(turma), 
+                method: :delete,
+                data: { turbo_confirm: 'Tem certeza que deseja excluir esta turma?' },
+                class: 'action-icon delete-icon',
+                title: 'Excluir' do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="no-results">Nenhuma turma cadastrada.</p>
+    <% end %>
+  </div>
+</div>
+
+<%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" %>
+
+<style>
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-form {
+  width: 100%;
+}
+
+.search-input-container {
+  display: flex;
+  gap: 10px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-button {
+  padding: 0 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #e9ecef;
+}
+
+.new-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.new-button:hover {
+  background-color: #45a049;
+}
+
+.list-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease;
+}
+
+.list-item:hover {
+  background-color: #f8f9fa;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.item-name {
+  font-weight: 500;
+  color: #333;
+  font-size: 1.1em;
+}
+
+.item-details {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.item-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.action-icon {
+  color: #666;
+  text-decoration: none;
+  font-size: 1.1em;
+  transition: color 0.3s ease;
+  padding: 5px;
+}
+
+.view-icon:hover {
+  color: #2196F3;
+}
+
+.edit-icon:hover {
+  color: #FFC107;
+}
+
+.add-icon:hover {
+  color: #4CAF50;
+}
+
+.delete-icon:hover {
+  color: #F44336;
+}
+
+.no-results {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+
+  .new-button {
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .search-input-container {
+    flex-direction: column;
+  }
+  
+  .search-button {
+    padding: 10px;
+  }
+  
+  .list-item {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .item-actions {
+    align-self: stretch;
+    justify-content: flex-end;
+  }
+}
+</style>

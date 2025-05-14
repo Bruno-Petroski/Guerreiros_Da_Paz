@@ -1,9 +1,16 @@
 class ResponsaveisController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_responsavel, only: [:edit, :update, :destroy]
+  before_action :set_responsavel, only: [:show, :edit, :update, :destroy]
 
   def index
-    @responsaveis = Responsavel.all
+    if params[:search].present?
+      @responsaveis = Responsavel.where('nome ILIKE ? OR telefone ILIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+    else
+      @responsaveis = Responsavel.all
+    end
+  end
+
+  def show
   end
 
   def new
