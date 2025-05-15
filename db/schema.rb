@@ -10,19 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_05_235629) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_15_000719) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "alunos", force: :cascade do |t|
     t.string "nome"
     t.date "data_nascimento"
-    t.string "email"
-    t.string "telefone"
-    t.bigint "responsaveis_id", null: false
+    t.bigint "responsavel_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["responsaveis_id"], name: "index_alunos_on_responsaveis_id"
+    t.string "cpf"
+    t.string "tipo_sanguineo"
+    t.string "modalidade_luta"
+    t.index ["responsavel_id"], name: "index_alunos_on_responsavel_id"
   end
 
   create_table "aulas", force: :cascade do |t|
@@ -51,17 +52,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_235629) do
     t.string "nome"
     t.string "email"
     t.string "telefone"
-    t.string "especialidade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "cpf"
   end
 
   create_table "responsaveis", force: :cascade do |t|
     t.string "nome"
     t.string "telefone"
-    t.string "endereco"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "cpf"
   end
 
   create_table "turmas", force: :cascade do |t|
@@ -89,7 +90,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_235629) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "alunos", "responsaveis", column: "responsaveis_id"
+  add_foreign_key "alunos", "responsaveis", column: "responsavel_id"
   add_foreign_key "aulas", "turmas"
   add_foreign_key "matriculas", "alunos"
   add_foreign_key "matriculas", "turmas"

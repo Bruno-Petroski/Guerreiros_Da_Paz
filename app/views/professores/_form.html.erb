@@ -1,0 +1,67 @@
+<%= form_with(model: professor, url: professor.new_record? ? professor_index_path : professor_path(professor), local: true) do |f| %>
+  <% if professor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(professor.errors.count, "erro") %> impediram que este professor fosse salvo:</h2>
+      <ul>
+        <% professor.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-section">
+    <h3 class="section-title">Dados do Professor</h3>
+    
+    <div class="form-field">
+      <%= f.label :nome, "Nome do Professor" %>
+      <%= f.text_field :nome %>
+    </div>
+
+    <div class="form-field">
+      <%= f.label :cpf, "CPF" %>
+      <%= f.text_field :cpf %>
+    </div>
+
+    <div class="form-field">
+      <%= f.label :telefone, "Telefone" %>
+      <%= f.text_field :telefone %>
+    </div>
+
+    <div class="form-field">
+      <%= f.label :email, "E-mail" %>
+      <%= f.email_field :email %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit professor.new_record? ? 'Cadastrar Professor' : 'Atualizar Professor', class: 'btn btn-primary' %>
+    <%= link_to 'Voltar', professor_index_path, class: 'btn btn-secondary' %>
+  </div>
+<% end %>
+
+<%= stylesheet_link_tag "shared_forms" %>
+<%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" %>
+<%= javascript_include_tag "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" %>
+
+<style>
+.select2-container--classic .select2-selection--single {
+  height: 42px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__rendered {
+  line-height: 28px;
+  color: #333;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__arrow {
+  height: 40px;
+}
+
+.select2-container--classic .select2-results__option--highlighted[aria-selected] {
+  background-color: #4CAF50;
+}
+</style> 

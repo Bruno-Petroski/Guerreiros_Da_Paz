@@ -7,15 +7,21 @@ Rails.application.routes.draw do
     delete '/users/sign_out' => 'devise/sessions#destroy'
   end
 
-  get 'dashboard', to: 'dashboard#index'
   root 'dashboard#index'
+  get 'dashboard', to: 'dashboard#index'
 
   resources :users, except: [:show]
   
-  resources :responsaveis
-  resources :alunos
-  resources :professores
-  resources :turmas do
-    resources :matriculas, only: [:new, :create, :destroy]
+  scope '/cadastros' do
+    resources :responsaveis, as: :responsavel
+    resources :alunos do
+      collection do
+        get :search_responsaveis
+      end
+    end
+    resources :professores, as: :professor
+    resources :turmas do
+      resources :matriculas, only: [:new, :create, :destroy]
+    end
   end
 end

@@ -1,0 +1,42 @@
+<div class="form-container">
+  <h1 class="form-title">Detalhes do Responsável</h1>
+
+  <div class="form-section">
+    <h3 class="section-title">Dados do Responsável</h3>
+    
+    <div class="form-field">
+      <label>Nome do Responsável</label>
+      <div class="field-value"><%= @responsavel.nome %></div>
+    </div>
+
+    <div class="form-field">
+      <label>CPF</label>
+      <div class="field-value"><%= @responsavel.cpf %></div>
+    </div>
+
+    <div class="form-field">
+      <label>Telefone</label>
+      <div class="field-value"><%= @responsavel.telefone %></div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= link_to 'Editar', edit_responsavel_path(@responsavel), class: 'btn btn-primary' %>
+    <%= link_to 'Voltar', responsavel_index_path, class: 'btn btn-secondary' %>
+  </div>
+</div>
+
+<%= stylesheet_link_tag "shared_forms" %>
+<%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" %>
+
+<style>
+.field-value {
+  padding: 0.75rem;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+}
+</style> 

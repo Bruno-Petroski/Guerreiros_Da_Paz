@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  turma: one
+  data: 2025-05-02
+  horario_inicio: 2025-05-02 10:01:29
+  horario_fim: 2025-05-02 10:01:29
+  conteudo: MyText
+
+two:
+  turma: two
+  data: 2025-05-02
+  horario_inicio: 2025-05-02 10:01:29
+  horario_fim: 2025-05-02 10:01:29
+  conteudo: MyText
