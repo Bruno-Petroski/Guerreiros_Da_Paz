@@ -4,30 +4,12 @@
   <div class="logo">Guerreiros da Paz</div>
 </div>
 
-<div class="card-cadastro">
-  <div class="cadastro-flex">
-    <div class="cadastro-col">
-      <h3>Professor</h3>
-      <%= form_with model: @professor do |f| %>
-        <%= f.label :nome, 'Nome do Professor:' %>
-        <%= f.text_field :nome %>
-
-        <%= f.label :cpf, 'CPF do Professor:' %>
-        <%= f.text_field :cpf %>
-
-        <%= f.label :telefone, 'Telefone do Professor:' %>
-        <%= f.text_field :telefone %>
-
-        <%= f.label :email, 'Email do Professor:' %>
-        <%= f.email_field :email %>
-
-        <div class="botoes-cadastro">
-          <%= f.submit 'Salvar Alterações', class: 'btn-cadastrar' %>
-          <button class="btn-voltar-tela">Voltar a tela inicial</button>
-        </div>
-      <% end %>
-    </div>
-  </div>
+<div class="form-container">
+  <h1 class="form-title">Editar Professor</h1>
+  <%= render 'form', professor: @professor %>
 </div>
+
+<%= stylesheet_link_tag "shared_forms" %>
+<%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" %>
 
 <!-- Adicione as classes CSS correspondentes no seu arquivo de estilos para obter o visual desejado -->

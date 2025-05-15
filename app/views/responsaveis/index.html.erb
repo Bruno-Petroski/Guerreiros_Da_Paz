@@ -1,13 +1,16 @@
 <div class="page-container">
   <div class="header">
+    <%= link_to root_path, class: 'back-link' do %>
+      <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+    <% end %>
     <h1>Cadastro de Responsáveis</h1>
-    <%= link_to new_responsavei_path, class: 'new-button' do %>
+    <%= link_to new_responsavel_path, class: 'new-button' do %>
       <i class="fas fa-plus"></i> Novo Responsável
     <% end %>
   </div>
 
   <div class="search-bar">
-    <%= form_tag responsaveis_path, method: :get, class: "search-form" do %>
+    <%= form_tag responsavel_index_path, method: :get, class: "search-form" do %>
       <div class="search-input-container">
         <%= text_field_tag :search, params[:search], class: "search-input", placeholder: "Buscar por nome ou telefone..." %>
         <%= button_tag type: 'submit', class: "search-button" do %>
@@ -24,10 +27,7 @@
           <div class="item-info">
             <span class="item-name"><%= responsavel.nome %></span>
             <span class="item-details">
-              <%= responsavel.telefone %>
-              <% if responsavel.endereco.present? %>
-                • <%= responsavel.endereco %>
-              <% end %>
+              CPF: <%= responsavel.cpf %> • Tel: <%= responsavel.telefone %>
             </span>
           </div>
           <div class="item-actions">
@@ -37,9 +37,9 @@
             <%= link_to edit_responsavel_path(responsavel), class: 'action-icon edit-icon', title: 'Editar' do %>
               <i class="fas fa-edit"></i>
             <% end %>
-            <%= link_to responsavel_path(responsavel), 
+            <%= button_to responsavel_path(responsavel), 
                 method: :delete,
-                data: { turbo_confirm: 'Tem certeza que deseja excluir este responsável?' },
+                form: { data: { turbo_confirm: 'Tem certeza que deseja excluir este responsável?' } },
                 class: 'action-icon delete-icon',
                 title: 'Excluir' do %>
               <i class="fas fa-trash"></i>
@@ -53,6 +53,7 @@
   </div>
 </div>
 
+<%= stylesheet_link_tag "index_views" %>
 <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" %>
 
 <style>
@@ -226,5 +227,16 @@ h1 {
     align-self: stretch;
     justify-content: flex-end;
   }
+}
+
+.action-icon.delete-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.action-icon.delete-icon:hover {
+  color: #F44336;
 }
 </style>

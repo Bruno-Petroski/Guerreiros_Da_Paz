@@ -1,20 +1,7 @@
-<h1><%= @aluno.new_record? ? "Novo" : "Editar" %> Aluno</h1>
+<div class="form-container">
+  <h1 class="form-title">Editar Aluno</h1>
 
-<%= form_with model: @aluno do |f| %>
-  <%= f.label :nome %><br>
-  <%= f.text_field :nome %><br>
+  <%= render 'form', aluno: @aluno %>
+</div>
 
-  <%= f.label :data_nascimento %><br>
-  <%= f.date_select :data_nascimento %><br>
-
-  <%= f.label :email %><br>
-  <%= f.email_field :email %><br>
-
-  <%= f.label :telefone %><br>
-  <%= f.telephone_field :telefone %><br>
-
-  <%= f.label :responsavel_id, "Responsável" %><br>
-  <%= f.collection_select :responsavel_id, Responsavel.all, :id, :nome, prompt: "Selecione" %><br>
-
-  <%= f.submit %>
-<% end %>
+<%= stylesheet_link_tag "shared_forms" %>

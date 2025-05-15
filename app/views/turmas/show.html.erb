@@ -1,0 +1,151 @@
+<div class="form-container">
+  <h1 class="form-title">Detalhes da Turma</h1>
+
+  <div class="form-section">
+    <h3 class="section-title">Dados da Turma</h3>
+    
+    <div class="form-field">
+      <label>Nome da Turma</label>
+      <div class="field-value"><%= @turma.nome %></div>
+    </div>
+
+    <div class="form-field">
+      <label>Horário</label>
+      <div class="field-value">
+        <i class="fas fa-clock"></i> <%= @turma.horario %>
+      </div>
+    </div>
+
+    <% if @turma.professor.present? %>
+      <div class="form-field">
+        <label>Professor</label>
+        <div class="field-value">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <%= link_to @turma.professor.nome, professor_path(@turma.professor), class: 'link-value' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-section">
+    <div class="section-header">
+      <h3 class="section-title">Alunos Matriculados</h3>
+      <%= link_to new_turma_matricula_path(@turma), class: 'btn btn-success' do %>
+        <i class="fas fa-user-plus"></i> Adicionar Aluno
+      <% end %>
+    </div>
+    
+    <% if @turma.alunos.any? %>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>CPF</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @turma.alunos.each do |aluno| %>
+              <tr>
+                <td><%= aluno.nome %></td>
+                <td><%= aluno.cpf %></td>
+                <td class="actions">
+                  <%= link_to aluno_path(aluno), class: 'btn btn-sm btn-info', title: 'Visualizar' do %>
+                    <i class="fas fa-eye"></i>
+                  <% end %>
+                  <%= button_to turma_matricula_path(@turma, aluno), 
+                      method: :delete,
+                      form: { data: { turbo_confirm: 'Tem certeza que deseja remover este aluno da turma?' } },
+                      class: 'btn btn-sm btn-danger',
+                      title: 'Remover da Turma' do %>
+                    <i class="fas fa-user-minus"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p class="no-results">Nenhum aluno matriculado nesta turma.</p>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <%= link_to 'Editar', edit_turma_path(@turma), class: 'btn btn-primary' %>
+    <%= link_to 'Voltar', turmas_path, class: 'btn btn-secondary' %>
+  </div>
+</div>
+
+<%= stylesheet_link_tag "shared_forms" %>
+<%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" %>
+
+<style>
+.field-value {
+  padding: 0.75rem;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link-value {
+  color: #2196F3;
+  text-decoration: none;
+}
+
+.link-value:hover {
+  text-decoration: underline;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 500;
+  text-align: left;
+}
+
+.table td.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 0.875rem;
+}
+
+.no-results {
+  text-align: center;
+  color: #666;
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+</style> 

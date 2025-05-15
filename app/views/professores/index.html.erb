@@ -1,5 +1,8 @@
 <div class="page-container">
   <div class="header">
+    <%= link_to root_path, class: 'back-link' do %>
+      <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+    <% end %>
     <h1>Cadastro de Professores</h1>
     <%= link_to new_professor_path, class: 'new-button' do %>
       <i class="fas fa-plus"></i> Novo Professor
@@ -7,9 +10,9 @@
   </div>
 
   <div class="search-bar">
-    <%= form_tag professores_path, method: :get, class: "search-form" do %>
+    <%= form_tag professor_index_path, method: :get, class: "search-form" do %>
       <div class="search-input-container">
-        <%= text_field_tag :search, params[:search], class: "search-input", placeholder: "Buscar por nome ou disciplina..." %>
+        <%= text_field_tag :search, params[:search], class: "search-input", placeholder: "Buscar por nome ou telefone..." %>
         <%= button_tag type: 'submit', class: "search-button" do %>
           <i class="fas fa-search"></i>
         <% end %>
@@ -24,9 +27,11 @@
           <div class="item-info">
             <span class="item-name"><%= professor.nome %></span>
             <span class="item-details">
-              <%= professor.disciplina %>
               <% if professor.telefone.present? %>
-                • <%= professor.telefone %>
+                <%= professor.telefone %>
+              <% end %>
+              <% if professor.email.present? %>
+                • <%= professor.email %>
               <% end %>
             </span>
           </div>
@@ -37,9 +42,9 @@
             <%= link_to edit_professor_path(professor), class: 'action-icon edit-icon', title: 'Editar' do %>
               <i class="fas fa-edit"></i>
             <% end %>
-            <%= link_to professor_path(professor), 
+            <%= button_to professor_path(professor), 
                 method: :delete,
-                data: { turbo_confirm: 'Tem certeza que deseja excluir este professor?' },
+                form: { data: { turbo_confirm: 'Tem certeza que deseja excluir este professor?' } },
                 class: 'action-icon delete-icon',
                 title: 'Excluir' do %>
               <i class="fas fa-trash"></i>
@@ -53,6 +58,7 @@
   </div>
 </div>
 
+<%= stylesheet_link_tag "index_views" %>
 <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" %>
 
 <style>
@@ -184,6 +190,13 @@ h1 {
 
 .edit-icon:hover {
   color: #FFC107;
+}
+
+.action-icon.delete-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
 }
 
 .delete-icon:hover {

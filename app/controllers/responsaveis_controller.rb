@@ -20,7 +20,7 @@ class ResponsaveisController < ApplicationController
   def create
     @responsavel = Responsavel.new(responsavel_params)
     if @responsavel.save
-      redirect_to responsaveis_path, notice: 'Responsável criado com sucesso.'
+      redirect_to responsavel_index_path, notice: 'Responsável criado com sucesso.'
     else
       render :new
     end
@@ -30,7 +30,7 @@ class ResponsaveisController < ApplicationController
 
   def update
     if @responsavel.update(responsavel_params)
-      redirect_to responsaveis_path, notice: 'Atualizado com sucesso.'
+      redirect_to responsavel_index_path, notice: 'Atualizado com sucesso.'
     else
       render :edit
     end
@@ -38,7 +38,7 @@ class ResponsaveisController < ApplicationController
 
   def destroy
     @responsavel.destroy
-    redirect_to responsaveis_path, notice: 'Removido com sucesso.'
+    redirect_to responsavel_index_path, notice: 'Removido com sucesso.'
   end
 
   private
@@ -48,6 +48,6 @@ class ResponsaveisController < ApplicationController
   end
 
   def responsavel_params
-    params.require(:responsavel).permit(:nome, :telefone, :endereco)
+    params.require(:responsavel).permit(:nome, :cpf, :telefone)
   end
 end

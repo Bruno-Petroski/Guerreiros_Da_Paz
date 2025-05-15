@@ -1,0 +1,102 @@
+<%= form_with(model: turma, local: true) do |f| %>
+  <% if turma.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(turma.errors.count, "erro") %> impediram que esta turma fosse salva:</h2>
+      <ul>
+        <% turma.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-section">
+    <h3 class="section-title">Dados da Turma</h3>
+
+    <div class="form-field">
+      <%= f.label :modalidade_luta, "Modalidade de Luta" %>
+      <%= f.select :modalidade_luta, ['Jiu-Jitsu', 'Karatê', 'Judô', 'Muay Thai'], { include_blank: 'Selecione...' } %>
+    </div>
+
+    <div class="form-field">
+      <%= f.label :local, "Local" %>
+      <%= f.text_field :local %>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3 class="section-title">Horário e Professor</h3>
+
+    <div class="form-field">
+      <%= f.label :dia_semana, "Dia da Semana" %>
+      <%= f.select :dia_semana, ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'], { include_blank: 'Selecione...' } %>
+    </div>
+
+    <div class="form-field">
+      <%= f.label :horario, "Horário da Aula" %>
+      <div class="horario-inputs">
+        <%= f.time_select :horario, { minute_step: 15 }, class: 'time-select' %>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <%= f.label :professor_id, "Professor" %>
+      <%= f.collection_select :professor_id, Professor.all, :id, :nome, 
+          { include_blank: 'Selecione...' },
+          class: 'select2-professor',
+          data: { placeholder: 'Selecione o professor...' } %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit turma.new_record? ? 'Cadastrar Turma' : 'Atualizar Turma', class: 'btn btn-primary' %>
+    <%= link_to 'Voltar', turmas_path, class: 'btn btn-secondary' %>
+  </div>
+<% end %>
+
+<%= stylesheet_link_tag "shared_forms" %>
+<%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" %>
+<%= javascript_include_tag "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" %>
+
+<script>
+$(document).ready(function() {
+  $('.select2-professor').select2({
+    theme: 'classic',
+    width: '100%'
+  });
+});
+</script>
+
+<style>
+.horario-inputs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.time-select {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.select2-container--classic .select2-selection--single {
+  height: 42px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__rendered {
+  line-height: 28px;
+  color: #333;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__arrow {
+  height: 40px;
+}
+
+.select2-container--classic .select2-results__option--highlighted[aria-selected] {
+  background-color: #4CAF50;
+}
+</style> 

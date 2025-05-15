@@ -13,9 +13,13 @@ Rails.application.routes.draw do
   resources :users, except: [:show]
   
   scope '/cadastros' do
-    resources :responsaveis
-    resources :alunos
-    resources :professores
+    resources :responsaveis, as: :responsavel
+    resources :alunos do
+      collection do
+        get :search_responsaveis
+      end
+    end
+    resources :professores, as: :professor
     resources :turmas do
       resources :matriculas, only: [:new, :create, :destroy]
     end
