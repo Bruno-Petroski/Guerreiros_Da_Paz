@@ -1,0 +1,22 @@
+<h1>Turma: <%= @turma.nome %></h1>
+
+<p>Descrição: <%= @turma.descricao %></p>
+<p>Modalidade: <%= @turma.modalidade %></p>
+<p>Capacidade: <%= @turma.capacidade %></p>
+<p>Alunos Matriculados: <%= @turma.alunos.count %></p>
+
+<%= link_to 'Matricular Aluno', new_turma_matricula_path(@turma) %>
+
+<h3>Alunos</h3>
+<ul>
+  <% @turma.matriculas.where(em_espera: false).each do |m| %>
+    <li><%= m.aluno.nome %> | <%= link_to "Remover", turma_matricula_path(@turma, m), method: :delete %></li>
+  <% end %>
+</ul>
+
+<h3>Lista de Espera</h3>
+<ul>
+  <% @matriculas_em_espera.each do |m| %>
+    <li><%= m.aluno.nome %></li>
+  <% end %>
+</ul>

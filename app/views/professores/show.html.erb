@@ -1,0 +1,46 @@
+<div class="form-container">
+  <h1 class="form-title">Detalhes do Professor</h1>
+
+  <div class="form-section">
+    <h3 class="section-title">Dados do Professor</h3>
+    
+    <div class="form-field">
+      <label>Nome do Professor</label>
+      <div class="field-value"><%= @professor.nome %></div>
+    </div>
+
+    <div class="form-field">
+      <label>CPF</label>
+      <div class="field-value"><%= @professor.cpf %></div>
+    </div>
+
+    <div class="form-field">
+      <label>Telefone</label>
+      <div class="field-value"><%= @professor.telefone %></div>
+    </div>
+
+    <div class="form-field">
+      <label>E-mail</label>
+      <div class="field-value"><%= @professor.email %></div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= link_to 'Editar', edit_professor_path(@professor), class: 'btn btn-primary' %>
+    <%= link_to 'Voltar', professor_index_path, class: 'btn btn-secondary' %>
+  </div>
+</div>
+
+<%= stylesheet_link_tag "shared_forms" %>
+
+<style>
+.field-value {
+  padding: 0.75rem;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+}
+</style> 

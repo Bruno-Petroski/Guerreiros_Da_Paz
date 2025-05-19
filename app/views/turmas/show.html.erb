@@ -1,0 +1,59 @@
+<div class="form-container">
+  <h1 class="form-title">Detalhes da Turma</h1>
+
+  <div class="form-section">
+    <h3 class="section-title">Dados da Turma</h3>
+
+    <div class="form-field">
+      <label>Modalidade da Luta</label>
+      <input type="text" class="form-control" value="<%= @turma.modalidade %>" disabled />
+    </div>
+
+    <div class="form-field">
+      <label>Local</label>
+      <input type="text" class="form-control" value="<%= @turma.local %>" disabled />
+    </div>
+
+    <div class="form-field">
+      <label>Dia</label>
+      <input type="text" class="form-control" value="<%= @turma.dia.present? ? @turma.dia.strftime('%d/%m/%Y') + ' (' + I18n.l(@turma.dia, format: '%A') + ')' : '' %>" disabled />
+    </div>
+
+    <div class="form-field">
+      <label>Professor</label>
+      <input type="text" class="form-control" value="<%= @turma.professor&.nome %>" disabled />
+    </div>
+
+    <div class="form-field">
+      <label>Horário da aula</label>
+      <input type="text" class="form-control" value="<%= @turma.horario_inicio.present? && @turma.horario_fim.present? ? @turma.horario_inicio.strftime('%H:%M') + ' - ' + @turma.horario_fim.strftime('%H:%M') : '' %>" disabled />
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= link_to 'Editar', edit_turma_path(@turma), class: 'btn btn-primary' %>
+    <%= link_to 'Voltar', turmas_path, class: 'btn btn-secondary' %>
+  </div>
+</div>
+
+<%= stylesheet_link_tag "shared_forms" %>
+<%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" %>
+
+<style>
+.form-field label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+.form-control[disabled] {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+  opacity: 1;
+  margin-bottom: 0.5rem;
+}
+</style> 

@@ -1,0 +1,13 @@
+pt-BR:
+  date:
+    day_names: [domingo, segunda-feira, terça-feira, quarta-feira, quinta-feira, sexta-feira, sábado]
+    abbr_day_names: [dom, seg, ter, qua, qui, sex, sáb]
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d de %b"
+      long: "%d de %B de %Y"
+  time:
+    formats:
+      default: "%A, %d de %B de %Y, %H:%M"
+      short: "%d/%m, %H:%M"
+      long: "%A, %d de %B de %Y, %H:%M" 
