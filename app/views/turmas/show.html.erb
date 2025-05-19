@@ -3,73 +3,31 @@
 
   <div class="form-section">
     <h3 class="section-title">Dados da Turma</h3>
-    
-    <div class="form-field">
-      <label>Nome da Turma</label>
-      <div class="field-value"><%= @turma.nome %></div>
-    </div>
 
     <div class="form-field">
-      <label>Horário</label>
-      <div class="field-value">
-        <i class="fas fa-clock"></i> <%= @turma.horario %>
-      </div>
+      <label>Modalidade da Luta</label>
+      <input type="text" class="form-control" value="<%= @turma.modalidade %>" disabled />
     </div>
 
-    <% if @turma.professor.present? %>
-      <div class="form-field">
-        <label>Professor</label>
-        <div class="field-value">
-          <i class="fas fa-chalkboard-teacher"></i>
-          <%= link_to @turma.professor.nome, professor_path(@turma.professor), class: 'link-value' %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="form-section">
-    <div class="section-header">
-      <h3 class="section-title">Alunos Matriculados</h3>
-      <%= link_to new_turma_matricula_path(@turma), class: 'btn btn-success' do %>
-        <i class="fas fa-user-plus"></i> Adicionar Aluno
-      <% end %>
+    <div class="form-field">
+      <label>Local</label>
+      <input type="text" class="form-control" value="<%= @turma.local %>" disabled />
     </div>
-    
-    <% if @turma.alunos.any? %>
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>CPF</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @turma.alunos.each do |aluno| %>
-              <tr>
-                <td><%= aluno.nome %></td>
-                <td><%= aluno.cpf %></td>
-                <td class="actions">
-                  <%= link_to aluno_path(aluno), class: 'btn btn-sm btn-info', title: 'Visualizar' do %>
-                    <i class="fas fa-eye"></i>
-                  <% end %>
-                  <%= button_to turma_matricula_path(@turma, aluno), 
-                      method: :delete,
-                      form: { data: { turbo_confirm: 'Tem certeza que deseja remover este aluno da turma?' } },
-                      class: 'btn btn-sm btn-danger',
-                      title: 'Remover da Turma' do %>
-                    <i class="fas fa-user-minus"></i>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% else %>
-      <p class="no-results">Nenhum aluno matriculado nesta turma.</p>
-    <% end %>
+
+    <div class="form-field">
+      <label>Dia</label>
+      <input type="text" class="form-control" value="<%= @turma.dia.present? ? @turma.dia.strftime('%d/%m/%Y') + ' (' + I18n.l(@turma.dia, format: '%A') + ')' : '' %>" disabled />
+    </div>
+
+    <div class="form-field">
+      <label>Professor</label>
+      <input type="text" class="form-control" value="<%= @turma.professor&.nome %>" disabled />
+    </div>
+
+    <div class="form-field">
+      <label>Horário da aula</label>
+      <input type="text" class="form-control" value="<%= @turma.horario_inicio.present? && @turma.horario_fim.present? ? @turma.horario_inicio.strftime('%H:%M') + ' - ' + @turma.horario_fim.strftime('%H:%M') : '' %>" disabled />
+    </div>
   </div>
 
   <div class="form-actions">
@@ -82,70 +40,20 @@
 <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" %>
 
 <style>
-.field-value {
-  padding: 0.75rem;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  min-height: 42px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.link-value {
-  color: #2196F3;
-  text-decoration: none;
-}
-
-.link-value:hover {
-  text-decoration: underline;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1rem;
-  background-color: white;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.table th,
-.table td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-}
-
-.table th {
-  background-color: #f8f9fa;
+.form-field label {
+  display: block;
+  margin-bottom: 0.3rem;
   font-weight: 500;
-  text-align: left;
 }
-
-.table td.actions {
-  display: flex;
-  gap: 8px;
-}
-
-.btn-sm {
-  padding: 4px 8px;
-  font-size: 0.875rem;
-}
-
-.no-results {
-  text-align: center;
-  color: #666;
-  padding: 1rem;
-  background-color: white;
+.form-control[disabled] {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+  opacity: 1;
+  margin-bottom: 0.5rem;
 }
 </style> 

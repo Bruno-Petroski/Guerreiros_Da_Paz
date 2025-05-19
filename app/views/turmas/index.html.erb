@@ -25,9 +25,14 @@
       <% @turmas.each do |turma| %>
         <div class="list-item">
           <div class="item-info">
-            <span class="item-name"><%= turma.nome %></span>
+            <span class="item-modalidade"><%= turma.modalidade %></span>
             <span class="item-details">
-              <i class="fas fa-clock"></i> <%= turma.horario_formatado %>
+              <i class="fas fa-clock"></i>
+              <% if turma.horario_inicio.present? && turma.horario_fim.present? %>
+                <%= turma.horario_inicio.strftime('%H:%M') %> - <%= turma.horario_fim.strftime('%H:%M') %>
+              <% else %>
+                --:--
+              <% end %>
               <% if turma.professor.present? %>
                 • <i class="fas fa-chalkboard-teacher"></i> <%= turma.professor.nome %>
               <% end %>
@@ -62,3 +67,12 @@
 <%= stylesheet_link_tag "index_views" %>
 <%= stylesheet_link_tag "turmas" %>
 <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" %>
+
+<style>
+.item-modalidade {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+</style>

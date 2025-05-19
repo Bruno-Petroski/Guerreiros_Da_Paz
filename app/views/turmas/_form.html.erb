@@ -11,46 +11,40 @@
   <% end %>
 
   <div class="form-section">
-    <h3 class="section-title">Dados da Turma</h3>
+    <h3 class="section-title">Turma</h3>
 
     <div class="form-field">
-      <%= f.label :modalidade_luta, "Modalidade de Luta" %>
-      <%= f.select :modalidade_luta, ['Jiu-Jitsu', 'Karatê', 'Judô', 'Muay Thai'], { include_blank: 'Selecione...' } %>
+      <%= f.label :modalidade, "Modalidade da Luta" %>
+      <%= f.select :modalidade, ['Jiu-Jitsu', 'Karatê', 'Judô', 'Muay Thai'], { include_blank: 'Selecione...' } %>
     </div>
 
     <div class="form-field">
       <%= f.label :local, "Local" %>
       <%= f.text_field :local %>
     </div>
-  </div>
-
-  <div class="form-section">
-    <h3 class="section-title">Horário e Professor</h3>
 
     <div class="form-field">
-      <%= f.label :dia_semana, "Dia da Semana" %>
-      <%= f.select :dia_semana, ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'], { include_blank: 'Selecione...' } %>
-    </div>
-
-    <div class="form-field">
-      <%= f.label :horario, "Horário da Aula" %>
-      <div class="horario-inputs">
-        <%= f.time_select :horario, { minute_step: 15 }, class: 'time-select' %>
-      </div>
+      <%= f.label :dia, "Dia" %>
+      <%= f.date_field :dia, class: 'date-select' %>
     </div>
 
     <div class="form-field">
       <%= f.label :professor_id, "Professor" %>
-      <%= f.collection_select :professor_id, Professor.all, :id, :nome, 
-          { include_blank: 'Selecione...' },
-          class: 'select2-professor',
-          data: { placeholder: 'Selecione o professor...' } %>
+      <%= f.collection_select :professor_id, Professor.all, :id, :nome, { include_blank: 'Selecione...' }, class: 'select2-professor', data: { placeholder: 'Selecione o professor...' } %>
+    </div>
+
+    <div class="form-field">
+      <%= f.label :horario_inicio, "Horário da aula:" %>
+      <div class="horario-inputs">
+        <%= f.time_select :horario_inicio, { minute_step: 5, default: turma.horario_inicio }, class: 'time-select', prompt: { hour: 'Início', minute: '' } %>
+        <%= f.time_select :horario_fim, { minute_step: 5, default: turma.horario_fim }, class: 'time-select', prompt: { hour: 'Fim', minute: '' } %>
+      </div>
     </div>
   </div>
 
   <div class="form-actions">
     <%= f.submit turma.new_record? ? 'Cadastrar Turma' : 'Atualizar Turma', class: 'btn btn-primary' %>
-    <%= link_to 'Voltar', turmas_path, class: 'btn btn-secondary' %>
+    <%= link_to 'Voltar à tela inicial', turmas_path, class: 'btn btn-secondary' %>
   </div>
 <% end %>
 

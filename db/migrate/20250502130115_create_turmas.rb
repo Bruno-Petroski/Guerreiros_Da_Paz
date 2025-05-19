@@ -5,7 +5,9 @@ class CreateTurmas < ActiveRecord::Migration[8.0]
       t.text :descricao
       t.string :modalidade
       t.string :local
-      t.string :horario
+      t.string :dia_semana
+      t.time :horario_inicio
+      t.time :horario_fim
       t.integer :capacidade
       t.references :professor, null: false, foreign_key: true
 

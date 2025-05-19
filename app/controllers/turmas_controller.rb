@@ -46,6 +46,6 @@ class TurmasController < ApplicationController
   end
 
   def turma_params
-    params.require(:turma).permit(:nome, :descricao, :modalidade, :local, :horario, :capacidade, :professor_id)
+    params.require(:turma).permit(:nome, :descricao, :modalidade, :local, :horario, :capacidade, :professor_id, :dia, :horario_inicio, :horario_fim)
   end
 end
