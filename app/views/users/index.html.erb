@@ -1,13 +1,62 @@
-<h1>Usuários</h1>
-
-<%= link_to 'Novo Usuário', new_user_path %>
-
-<ul>
-  <% @users.each do |user| %>
-    <li>
-      <%= user.email %>
-      | <%= link_to 'Editar', edit_user_path(user) %>
-      | <%= link_to 'Remover', user_path(user), method: :delete, data: { confirm: "Tem certeza?" } %>
-    </li>
-  <% end %>
-</ul>
+<div class="page-container">
+  <div class="header">
+    <%= link_to dashboard_path, class: 'back-link' do %>
+      <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+    <% end %>
+    <h1 class="form-title" style="text-align: center; margin: 0 auto 2rem auto;">Usuários</h1>
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 2rem;">
+      <%= link_to new_user_path, class: 'btn btn-primary', style: 'display: flex; align-items: center; gap: 0.5rem; background: #4CAF50; border: none; font-weight: 500; font-size: 1.08rem; box-shadow: 0 2px 4px rgba(0,0,0,0.07);' do %>
+        <i class="fas fa-plus"></i> Novo Usuário
+      <% end %>
+    </div>
+  </div>
+  <div class="list-container">
+    <% if @users.any? %>
+      <% @users.each do |user| %>
+        <div class="list-item" style="display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 1.2rem 2rem; margin-bottom: 1rem;">
+          <div class="item-info">
+            <span class="item-name" style="font-weight: 600; font-size: 1.08rem;"><%= user.email %></span>
+          </div>
+          <div class="item-actions" style="display: flex; gap: 1.2rem;">
+            <%= link_to edit_user_path(user), class: 'action-icon edit-icon', title: 'Editar', style: 'color: #666; font-size: 1.2rem;' do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= button_to user_path(user), 
+                  method: :delete,
+                  form: { data: { turbo_confirm: 'Tem certeza que deseja remover este usuário?' } },
+                  class: 'action-icon delete-icon',
+                  title: 'Excluir' do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="no-results">Nenhum usuário cadastrado.</p>
+    <% end %>
+  </div>
+</div>
+<%= stylesheet_link_tag 'shared_forms' %>
+<%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css' %>
+<style>
+.page-container {
+  max-width: 900px;
+  margin: 2.5rem auto;
+}
+.header {
+  margin-bottom: 2rem;
+}
+.list-container {
+  margin-top: 1.5rem;
+}
+.list-item .action-icon {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.list-item .edit-icon:hover {
+  color: #2196F3 !important;
+}
+.list-item .delete-icon:hover {
+  color: #b71c1c !important;
+}
+</style>
