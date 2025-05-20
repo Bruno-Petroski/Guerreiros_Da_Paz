@@ -1,0 +1,247 @@
+<div class="alocacao-voltar-bar">
+  <%= link_to dashboard_path, class: 'back-link' do %>
+    <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+  <% end %>
+</div>
+<h1 class="form-title alocacao-title">Alocação de Alunos em Turmas</h1>
+<div class="alocacao-wrapper">
+  <form id="form-alocar" action="<%= alocar_alunos_path %>" method="post">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <input type="hidden" name="turma_id" value="<%= @turma_selecionada&.id %>">
+    <div class="alocacao-col">
+      <label class="alocacao-label">Lista de Espera:</label>
+      <div class="alocacao-list">
+        <% @alunos_disponiveis.each do |aluno| %>
+          <div class="alocacao-item">
+            <label class="alocacao-checkbox-label">
+              <input type="checkbox" name="alunos_disponiveis[]" value="<%= aluno.id %>">
+              <span class="aluno-nome"><%= aluno.nome %></span> <span class="aluno-mod">- <%= aluno.modalidade_luta %></span>
+            </label>
+          </div>
+        <% end %>
+        <% if @alunos_disponiveis.empty? %>
+          <div class="alocacao-vazio">Nenhum aluno disponível</div>
+        <% end %>
+      </div>
+    </div>
+  </form>
+
+  <div class="alocacao-actions-center">
+    <button class="alocacao-btn-circular alocacao-btn-green" type="button" title="Alocar" onclick="document.getElementById('form-alocar').submit();"><i class="fas fa-plus"></i></button>
+    <button class="alocacao-btn-circular alocacao-btn-red" type="button" title="Remover" onclick="document.getElementById('form-remover').submit();"><i class="fas fa-minus"></i></button>
+  </div>
+
+  <form id="form-remover" action="<%= remover_alunos_path %>" method="post">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <input type="hidden" name="turma_id" value="<%= @turma_selecionada&.id %>">
+    <div class="alocacao-col alocacao-col-turma">
+      <div class="alocacao-label-select">
+        <label class="alocacao-label">Turma:</label>
+        <%= form_with url: alocacoes_path, method: :get, local: true, class: 'turma-select-form' do |f2| %>
+          <%= f2.select :turma_id, @turmas.map { |t| [
+            "#{t.modalidade} | Prof. #{t.professor&.nome} | #{t.dia&.strftime('%d/%m/%Y')} | #{t.horario_inicio&.strftime('%H:%M')}-#{t.horario_fim&.strftime('%H:%M')}",
+            t.id
+          ] }, { selected: @turma_selecionada&.id }, { class: 'form-control turma-select', onchange: 'this.form.submit();' } %>
+        <% end %>
+      </div>
+      <div class="alocacao-list">
+        <% @alunos_alocados.each do |aluno| %>
+          <div class="alocacao-item">
+            <label class="alocacao-checkbox-label">
+              <input type="checkbox" name="alunos_alocados[]" value="<%= aluno.id %>">
+              <span class="aluno-nome"><%= aluno.nome %></span> <span class="aluno-mod">- <%= aluno.modalidade_luta %></span>
+            </label>
+          </div>
+        <% end %>
+        <% if @alunos_alocados.empty? %>
+          <div class="alocacao-vazio">Nenhum aluno alocado</div>
+        <% end %>
+      </div>
+    </div>
+  </form>
+</div>
+
+<%= stylesheet_link_tag "shared_forms" %>
+<%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" %>
+
+<style>
+.alocacao-voltar-bar {
+  margin: 2rem 0 0.5rem 0;
+  padding-left: 1.5rem;
+}
+.back-link {
+  color: #444;
+  font-size: 1.08rem;
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s;
+}
+.back-link:hover {
+  color: #2196F3;
+  text-decoration: underline;
+}
+.alocacao-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.alocacao-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.5rem;
+  margin-top: 1rem;
+}
+.alocacao-col {
+  background: #f8f9fa;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 18px;
+  padding: 2rem 2rem 2.5rem 2rem;
+  width: 420px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  align-items: stretch;
+}
+.alocacao-col-turma {
+  width: 500px;
+}
+.alocacao-label {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.alocacao-label-select {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+.turma-select-form {
+  display: inline;
+}
+.turma-select {
+  min-width: 320px;
+  font-size: 1.08rem;
+  border-radius: 6px;
+  border: 1.5px solid #bdbdbd;
+  padding: 0.45rem 0.7rem;
+  background: #fff;
+  margin-left: 0.5rem;
+  transition: border 0.2s;
+}
+.turma-select:focus {
+  border-color: #4CAF50;
+}
+.alocacao-list {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  background: #fff;
+  border: 1.5px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  min-height: 220px;
+}
+.alocacao-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0;
+  font-size: 1.12rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+.alocacao-item:last-child {
+  border-bottom: none;
+}
+.aluno-nome {
+  font-weight: 500;
+  color: #222;
+}
+.aluno-mod {
+  color: #888;
+  font-size: 0.98em;
+}
+.alocacao-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+}
+.alocacao-checkbox-label input[type="checkbox"] {
+  accent-color: #4CAF50;
+  width: 18px;
+  height: 18px;
+  margin-right: 0.3rem;
+}
+.alocacao-actions-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 4.5rem;
+}
+.alocacao-btn-circular {
+  width: 56px;
+  height: 56px;
+  font-size: 2rem;
+  border-radius: 50%;
+  border: 2.5px solid #4CAF50;
+  background: #fff;
+  color: #4CAF50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  margin-bottom: 0.5rem;
+}
+.alocacao-btn-circular.alocacao-btn-green:hover {
+  background: #4CAF50;
+  color: #fff;
+  border-color: #388e3c;
+}
+.alocacao-btn-circular.alocacao-btn-red {
+  border-color: #e53935;
+  color: #e53935;
+}
+.alocacao-btn-circular.alocacao-btn-red:hover {
+  background: #e53935;
+  color: #fff;
+  border-color: #b71c1c;
+}
+.alocacao-vazio {
+  color: #aaa;
+  text-align: center;
+  padding: 1.5rem 0 0.5rem 0;
+  font-size: 1.08rem;
+}
+@media (max-width: 1100px) {
+  .alocacao-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .alocacao-col {
+    min-width: 90vw;
+    max-width: 98vw;
+    padding: 1.2rem 0.5rem 2rem 0.5rem;
+  }
+  .turma-select {
+    min-width: 60vw;
+  }
+  .alocacao-actions-center {
+    flex-direction: row;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+}
+</style> 

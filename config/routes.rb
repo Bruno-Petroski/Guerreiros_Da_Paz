@@ -24,4 +24,8 @@ Rails.application.routes.draw do
       resources :matriculas, only: [:new, :create, :destroy]
     end
   end
+
+  get 'alocacoes', to: 'alocacoes#index'
+  post 'alocacoes/alocar', to: 'alocacoes#alocar', as: :alocar_alunos
+  post 'alocacoes/remover', to: 'alocacoes#remover', as: :remover_alunos
 end

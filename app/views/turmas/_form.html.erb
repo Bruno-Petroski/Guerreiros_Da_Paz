@@ -15,22 +15,27 @@
 
     <div class="form-field">
       <%= f.label :modalidade, "Modalidade da Luta" %>
-      <%= f.select :modalidade, ['Jiu-Jitsu', 'Karatê', 'Judô', 'Muay Thai'], { include_blank: 'Selecione...' } %>
+      <%= f.select :modalidade, ['Jiu-Jitsu', 'Karatê', 'Judô', 'Muay Thai'], { include_blank: 'Selecione...' }, class: 'form-control' %>
     </div>
 
     <div class="form-field">
       <%= f.label :local, "Local" %>
-      <%= f.text_field :local %>
+      <%= f.text_field :local, class: 'form-control' %>
     </div>
 
     <div class="form-field">
       <%= f.label :dia, "Dia" %>
-      <%= f.date_field :dia, class: 'date-select' %>
+      <%= f.date_field :dia, class: 'form-control date-select' %>
     </div>
 
     <div class="form-field">
       <%= f.label :professor_id, "Professor" %>
-      <%= f.collection_select :professor_id, Professor.all, :id, :nome, { include_blank: 'Selecione...' }, class: 'select2-professor', data: { placeholder: 'Selecione o professor...' } %>
+      <%= f.collection_select :professor_id, Professor.all, :id, :nome, { include_blank: 'Selecione...' }, class: 'form-control select2-professor', data: { placeholder: 'Selecione o professor...' } %>
+    </div>
+
+    <div class="form-field">
+      <%= f.label :capacidade, "Capacidade da Turma" %>
+      <%= f.number_field :capacidade, min: 1, required: true, placeholder: "Ex: 20", class: 'form-control' %>
     </div>
 
     <div class="form-field">
@@ -92,5 +97,15 @@ $(document).ready(function() {
 
 .select2-container--classic .select2-results__option--highlighted[aria-selected] {
   background-color: #4CAF50;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+  box-sizing: border-box;
 }
 </style> 

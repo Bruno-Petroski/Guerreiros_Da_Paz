@@ -4,6 +4,8 @@ class Turma < ApplicationRecord
   has_many :alunos, through: :matriculas
   has_many :aulas, dependent: :destroy
 
+  validates :capacidade, presence: true, numericality: { only_integer: true, greater_than: 0 }
+
   def horario_formatado
     return horario if horario.blank?
     
