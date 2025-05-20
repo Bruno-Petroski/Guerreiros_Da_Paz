@@ -25,6 +25,11 @@
     </div>
 
     <div class="form-field">
+      <label>Capacidade da Turma</label>
+      <input type="text" class="form-control" value="<%= @turma.capacidade %>" disabled />
+    </div>
+
+    <div class="form-field">
       <label>Horário da aula</label>
       <input type="text" class="form-control" value="<%= @turma.horario_inicio.present? && @turma.horario_fim.present? ? @turma.horario_inicio.strftime('%H:%M') + ' - ' + @turma.horario_fim.strftime('%H:%M') : '' %>" disabled />
     </div>
