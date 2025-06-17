@@ -1,5 +1,5 @@
 // Máscara de telefone para inputs com data-mask="phone"
-document.addEventListener('DOMContentLoaded', function() {
+function mascaraPhone() {
   function formatPhone(value) {
     value = value.replace(/\D/g, '').slice(0, 11);
     if (value.length <= 2) {
@@ -33,4 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
       e.target.value = formattedValue;
     });
   });
-}); 
+}
+document.addEventListener('DOMContentLoaded', mascaraPhone);
+document.addEventListener('turbo:load', mascaraPhone); 

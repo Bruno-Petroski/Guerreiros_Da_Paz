@@ -1,5 +1,5 @@
 // Máscara de CPF para inputs com data-mask="cpf"
-document.addEventListener('DOMContentLoaded', function() {
+function mascaraCPF() {
   function formatCPF(value) {
     value = value.replace(/\D/g, '').slice(0, 11);
     if (value.length <= 3) {
@@ -33,4 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
       e.target.value = formattedValue;
     });
   });
-}); 
+}
+document.addEventListener('DOMContentLoaded', mascaraCPF);
+document.addEventListener('turbo:load', mascaraCPF); 
