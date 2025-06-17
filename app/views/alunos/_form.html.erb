@@ -15,17 +15,17 @@
     
     <div class="form-field">
       <%= f.label :nome, "Nome do Aluno" %>
-      <%= f.text_field :nome, class: 'form-input' %>
+      <%= f.text_field :nome, class: 'form-input', required: true %>
     </div>
 
     <div class="form-field">
       <%= f.label :cpf, "CPF" %>
-      <%= f.text_field :cpf, class: 'form-input' %>
+      <%= f.text_field :cpf, class: 'form-input', data: { mask: "cpf" }, required: true, maxlength: 14, title: "CPF deve conter 11 dígitos" %>
     </div>
 
     <div class="form-field">
       <%= f.label :data_nascimento, "Data de Nascimento" %>
-      <%= f.date_field :data_nascimento, class: 'form-input' %>
+      <%= f.date_field :data_nascimento, class: 'form-input', required: true %>
     </div>
 
     <div class="form-field">
@@ -34,7 +34,8 @@
           ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], 
           { include_blank: 'Selecione...' },
           class: 'select2-basic',
-          data: { placeholder: 'Selecione o tipo sanguíneo...' } %>
+          data: { placeholder: 'Selecione o tipo sanguíneo...' },
+          required: true %>
     </div>
 
     <div class="form-field">
@@ -43,7 +44,8 @@
           ['Jiu-Jitsu', 'Karatê', 'Judô', 'Muay Thai'], 
           { include_blank: 'Selecione...' },
           class: 'select2-basic',
-          data: { placeholder: 'Selecione a modalidade...' } %>
+          data: { placeholder: 'Selecione a modalidade...' },
+          required: true %>
     </div>
   </div>
 

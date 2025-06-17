@@ -8,11 +8,8 @@ class Turma < ApplicationRecord
 
   def horario_formatado
     return horario if horario.blank?
-    
-    # Se o horário já estiver no formato "HH:MM", retorna como está
     return horario if horario.match?(/^\d{2}:\d{2}$/)
     
-    # Se o horário estiver em outro formato, tenta converter
     begin
       Time.parse(horario).strftime("%H:%M")
     rescue

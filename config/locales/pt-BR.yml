@@ -11,6 +11,110 @@ pt-BR:
       default: "%A, %d de %B de %Y, %H:%M"
       short: "%d/%m, %H:%M"
       long: "%A, %d de %B de %Y, %H:%M" 
+  activerecord:
+    models:
+      aluno: Aluno
+      professor: Professor
+      responsavel: Responsável
+      turma: Turma
+      matricula: Matrícula
+    attributes:
+      aluno:
+        nome: Nome
+        cpf: CPF
+        data_nascimento: Data de Nascimento
+        tipo_sanguineo: Tipo Sanguíneo
+        modalidade_luta: Modalidade de Luta
+        responsavel: Responsável
+      professor:
+        nome: Nome
+        cpf: CPF
+        telefone: Telefone
+        email: E-mail
+      responsavel:
+        nome: Nome
+        cpf: CPF
+        telefone: Telefone
+      turma:
+        nome: Nome
+        modalidade: Modalidade
+        horario_inicio: Horário de Início
+        horario_fim: Horário de Término
+        professor: Professor
+    errors:
+      models:
+        aluno:
+          attributes:
+            responsavel:
+              required: "é obrigatório"
+            cpf:
+              required: "é obrigatório"
+              invalid: "deve conter 11 dígitos"
+            nome:
+              required: "é obrigatório"
+            data_nascimento:
+              required: "é obrigatória"
+            tipo_sanguineo:
+              required: "é obrigatório"
+            modalidade_luta:
+              required: "é obrigatória"
+        professor:
+          attributes:
+            nome:
+              required: "é obrigatório"
+            cpf:
+              required: "é obrigatório"
+              invalid: "deve conter 11 dígitos"
+            telefone:
+              required: "é obrigatório"
+              invalid: "deve conter entre 10 e 11 dígitos"
+            email:
+              required: "é obrigatório"
+              invalid: "deve ser um e-mail válido"
+        responsavel:
+          attributes:
+            nome:
+              required: "é obrigatório"
+            cpf:
+              required: "é obrigatório"
+              invalid: "deve conter 11 dígitos"
+            telefone:
+              required: "é obrigatório"
+              invalid: "deve conter entre 10 e 11 dígitos"
+  errors:
+    messages:
+      required: "é obrigatório"
+      invalid: "é inválido"
+      too_short: "é muito curto (mínimo: %{count} caracteres)"
+      too_long: "é muito longo (máximo: %{count} caracteres)"
+      taken: "já está em uso"
+      not_a_number: "não é um número"
+      greater_than: "deve ser maior que %{count}"
+      less_than: "deve ser menor que %{count}"
+      blank: "não pode ficar em branco"
+      present: "deve ficar em branco"
+      confirmation: "não confere com a confirmação"
+      accepted: "deve ser aceito"
+      empty: "não pode ficar vazio"
+      equal_to: "deve ser igual a %{count}"
+      even: "deve ser par"
+      exclusion: "está reservado"
+      inclusion: "não está incluído na lista"
+      invalid: "é inválido"
+      less_than_or_equal_to: "deve ser menor ou igual a %{count}"
+      model_invalid: "A validação falhou: %{errors}"
+      not_a_number: "não é um número"
+      not_an_integer: "não é um número inteiro"
+      odd: "deve ser ímpar"
+      other_than: "deve ser diferente de %{count}"
+      record_invalid: "A validação falhou: %{errors}"
+      restrict_dependent_destroy:
+        has_one: "Não é possível excluir o registro pois existe um %{record} dependente"
+        has_many: "Não é possível excluir o registro pois existem %{record} dependentes"
+      taken: "já está em uso"
+      too_long: "é muito longo (máximo: %{count} caracteres)"
+      too_short: "é muito curto (mínimo: %{count} caracteres)"
+      wrong_length: "não possui o tamanho esperado (%{count} caracteres)"
   devise:
     sessions:
       signed_in: "Login efetuado com sucesso."

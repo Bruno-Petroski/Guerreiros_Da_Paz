@@ -15,17 +15,17 @@
     
     <div class="form-field">
       <%= f.label :nome, "Nome do Responsável" %>
-      <%= f.text_field :nome %>
+      <%= f.text_field :nome, required: true %>
     </div>
 
     <div class="form-field">
       <%= f.label :cpf, "CPF" %>
-      <%= f.text_field :cpf %>
+      <%= f.text_field :cpf, class: 'form-input', data: { mask: "cpf" }, required: true, maxlength: 14, title: "CPF deve conter 11 dígitos" %>
     </div>
 
     <div class="form-field">
       <%= f.label :telefone, "Telefone" %>
-      <%= f.text_field :telefone %>
+      <%= f.text_field :telefone, class: 'form-input', data: { mask: "phone" }, required: true, maxlength: 15, title: "Telefone deve conter entre 10 e 11 dígitos" %>
     </div>
   </div>
 
