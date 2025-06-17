@@ -8,3 +8,102 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* LOGIN PAGE STYLES */
+.login-page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fff;
+  padding-top: 5vh;
+}
+.login-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.login-logo {
+  width: 70px;
+  height: 70px;
+}
+.login-title {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 2.2rem;
+  color: #222;
+  line-height: 1.1;
+}
+.login-title-main {
+  font-size: 2.2rem;
+}
+.login-title-sub {
+  font-size: 1.7rem;
+}
+.login-card {
+  background: #ededed;
+  border-radius: 8px;
+  padding: 2rem 2.2rem 1.5rem 2.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login-field {
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.login-field label {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  color: #222;
+}
+.login-input {
+  width: 100%;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: #fff;
+}
+.login-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.7rem;
+}
+.login-btn {
+  width: 100%;
+  background: #7be37b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.login-btn:hover {
+  background: #5fd65f;
+}
+@media (max-width: 500px) {
+  .login-card {
+    min-width: 90vw;
+    padding: 1.2rem 0.5rem;
+  }
+  .login-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .login-title {
+    font-size: 1.3rem;
+  }
+}
